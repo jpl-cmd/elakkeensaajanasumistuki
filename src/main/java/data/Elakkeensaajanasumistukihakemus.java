@@ -1,5 +1,7 @@
 package data;
 
+import java.time.LocalDate;
+
 import lombok.Data;
 
 /**
@@ -7,30 +9,54 @@ import lombok.Data;
  *
  */
 @Data
-public class Elakkeensaajanasumistukihakemus {
+public class ElakkeensaajanasumistukiHakemus {
+	
+	// Hakemuksen jättöpäivä
+	private LocalDate hakemuspaiva = LocalDate.now();
 	
 	// Laskennassa käytettävät lähtötiedot tulevat hakijalta
 	private Hakija hakija;
+	private Puoliso puoliso;
+	private Asunto asunto;
+	private boolean hakijallaPuoliso;
 	
 	// Laskennassa käytettävät vakiot
 	private Vakiot vakiot;
 	
-	// Laskennassa pääteltävät tiedot
-	private boolean hakijallaPuoliso = false;
+	// Laskennan alussa pääteltävä tieto
+	private boolean hakijallaOikeusAsumistukeen;
 	
-	private boolean hakijallaOikeusAsumistukeen = false;
-	private boolean puolisollaOikeusAsumistukeen = false;
+	// Asumismenojen liiketoimintasäännöt
+	private double asumismenojenEnimmaismaara;
+	private double kunnossapidonKustannukset;
+	private int kohtuullinenAsunnonKoko;
+	private LammitysRyhma lammitysRyhma;
+	private Kuntaryhma kuntaryhma;
+	private double lammityskustannuksienEnimmaismaara;
 	
-	private double huomioonOtettavatAsumismenot = 0.0;
-	private double lisaomavastuunTuloraja = 0.0;
-	private double lisaomavastuunMaara = 0.0;
-	private double omaisuusRaja = 0.0;
-	private double pieninMaksettavaAsumistuki = 0.0;
+	// Asumismenojen laskentojen tulokset
+	private double huomioonotettavaNeliomaara;
+	private double lammityskustannukset;
+	private double hoitomenot;
+	private double asumismenotYhteensa;
+	private double huomioonOtettavatAsumismenot;
 	
+	// Lisäomavastuun liiketoimintasäännöt
+	private boolean puolisollaOikeusAsumistukeen;
+	private double lisaomavastuunTuloraja;
+	private double omaisuusRaja;
+	
+	// Lisäomavastuun laskentojen tulokset
+	private double huomioonOtettavaOmaisuus;
+	private double omaisuusrajanYlittavaOsuus;
+	private double huomioonOtettavatTulot;
+	private double tulorajanYlittavaOsuus;
+	private double lisaomavastuunMaara;
+	
+	// Lopputulokseen vaikuttava liiketoimintasääntö
+	private double pieninMaksettavaAsumistuki;
+	
+	// Hakemuksen valmistumista indikoiva muuttuja
 	private boolean hakemusValmis = false;
-	private boolean hakemusHyvaksytty = false;
-	private double elakkeensaajanasumistuenMaara;
-	
-	
 
 }

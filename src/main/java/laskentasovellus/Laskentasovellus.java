@@ -1,26 +1,29 @@
 package laskentasovellus;
 
-import data.Elakkeensaajanasumistukihakemus;
+import data.ElakkeensaajanasumistukiHakemus;
+import data.ElakkeensaajanasumistukiRatkaisu;
 import data.Etuus;
 import data.Hakija;
 import data.Vakiot;
+import laskuri.Laskuri;
 
 public class Laskentasovellus {
 	
-	Elakkeensaajanasumistukihakemus hakemus;
+	ElakkeensaajanasumistukiHakemus hakemus;
+	ElakkeensaajanasumistukiRatkaisu ratkaisu;
 	
 	
 	
-	public void kasitteleHakemus(Elakkeensaajanasumistukihakemus hakemus) {
+	// Metodi simuloi prosessia
+	public void teeRatkaisu(ElakkeensaajanasumistukiRatkaisu ratkaisu) {
 		
-		this.hakemus = hakemus;
+		this.ratkaisu = ratkaisu;
+		this.hakemus = this.ratkaisu.getHakemus();
+		
 		
 		// Asetetaan hakemuksessa käytettävät vakiot
 		asetaVakiot();
 		
-		// Prosessissa asetetaan laskennassa vaadittavat muuttujat oikeisiin arvoihin
-	
-		// Varsinainen laskenta tapahtuu tämän jälkeen
 		
 		
 		
@@ -29,7 +32,7 @@ public class Laskentasovellus {
 		
 		// Lasketaan tulokset
 		Laskuri laskuri = new Laskuri();
-		laskuri.laskeElakkaansaajanasumistuki(hakemus);
+		laskuri.laskeElakkaansaajanasumistuki(ratkaisu);
 		
 		
 	}

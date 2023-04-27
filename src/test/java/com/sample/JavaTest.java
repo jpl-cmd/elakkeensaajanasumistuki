@@ -3,16 +3,17 @@ package com.sample;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import data.Asunto;
 import data.Asuntotyyppi;
-import data.Elakkeensaajanasumistukihakemus;
+import data.ElakkeensaajanasumistukiHakemus;
+import data.ElakkeensaajanasumistukiRatkaisu;
 import data.Etuus;
 import data.Hakija;
+import data.Kunta;
 import data.Puoliso;
 import data.Vakiot;
 import laskentasovellus.Laskentasovellus;
@@ -23,14 +24,16 @@ public class JavaTest {
 
 	Hakija hakija;
 	Puoliso puoliso;
-	Elakkeensaajanasumistukihakemus hakemus;
+	ElakkeensaajanasumistukiHakemus hakemus;
+	ElakkeensaajanasumistukiRatkaisu ratkaisu;
 	
 	
 	@BeforeEach
 	void alustus() {
 		hakija = new Hakija();
 		puoliso = new Puoliso();
-		hakemus = new Elakkeensaajanasumistukihakemus();
+		hakemus = new ElakkeensaajanasumistukiHakemus();
+		ratkaisu = new ElakkeensaajanasumistukiRatkaisu();
 		hakemus.setVakiot(new Vakiot());
 		
 	}
@@ -46,14 +49,19 @@ public class JavaTest {
 		hakemus.setHakija(hakija);
 		hakemus.setHakijallaPuoliso(false);
 		
+		// Liitetään hakemus ratkaisupohjaan
+		ratkaisu.setHakemus(hakemus);
+		
 		// Prosessoidaan hakemus
 		Laskentasovellus laskentasovellus = new Laskentasovellus();
-		laskentasovellus.kasitteleHakemus(hakemus);
+		laskentasovellus.teeRatkaisu(ratkaisu);
 				
 		// Assertit
-		assertEquals(hakemus.isHakemusHyvaksytty(), false);
+		assertEquals(0.0, ratkaisu.getMyonnetynTuenMaara());
+		assertEquals(false , ratkaisu.isTukiMyonnetty());
 	}
 	
+	@Disabled
 	@Test
 	void testitapaus2() {
 		
@@ -66,10 +74,12 @@ public class JavaTest {
 		
 		// Asunnon tiedot
 		Asunto asunto = new Asunto();
-		asunto.setSijaintikunta("Helsinki");
+		asunto.setSijaintikunta(Kunta.HELSINKI);
 		asunto.setAsunnontyyppi(Asuntotyyppi.VUOKRA_ASUNTO);
 		asunto.setAsumismenot(770);
-		hakija.setAsunto(asunto);
+		
+		// Liitetään asunnon tiedot hakemukseen
+		hakemus.setAsunto(asunto);
 		
 		// Puolison tiedot
 		puoliso.setIka(65);
@@ -78,23 +88,31 @@ public class JavaTest {
 		puoliso.setOmaisuus(3200);
 		puoliso.setVelat(0);
 		
+		// Liitetään puolison tiedot hakemukseen
+		hakemus.setPuoliso(puoliso);
+		
 		// Liitetään hakija hakemukseen
 		hakemus.setHakija(hakija);
 		
+		// Liitetään hakemus ratkaisupohjaan
+		ratkaisu.setHakemus(hakemus);
+		
 		// Prosessoidaan hakemus
 		Laskentasovellus laskentasovellus = new Laskentasovellus();
-		laskentasovellus.kasitteleHakemus(hakemus);
+		laskentasovellus.teeRatkaisu(ratkaisu);
 		
 		// Assertit
 		
 		
 	}
 	
+	@Disabled
 	@Test
 	void testitapaus3() {
 		
 	}
 	
+	@Disabled
 	@Test
 	void testitapaus4() {
 		

@@ -9,5 +9,6 @@ public class Vakiot {
 	private double perusomavastuu;
 	private double lisaomavastuuKerroin;
 	private double omaisuusKerroin;
+	private double omakotitalonVesimaksunEnimmaismaara;
 
 }

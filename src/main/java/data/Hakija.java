@@ -7,7 +7,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class Hakija extends Henkilo{
 	
-	private Puoliso puoliso;
-	private Asunto asunto;
 
 }
