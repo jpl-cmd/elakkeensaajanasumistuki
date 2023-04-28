@@ -6,131 +6,120 @@ import data.ElakkeensaajanasumistukiRatkaisu;
 import data.Vakiot;
 
 public class Laskuri {
-	
 
-	
-	
 	/*
 	 * LISÄOMAVASTUUSEEN LIITTYVÄT LASKUT
 	 */
-	
+
 	public void laskeHuomioonotettavaOmaisuus(ElakkeensaajanasumistukiHakemus hakemus) {
-		if(hakemus.isHakijallaPuoliso()) {
-			hakemus.setHuomioonOtettavaOmaisuus( (hakemus.getHakija().getOmaisuus() - hakemus.getHakija().getVelat())
+		if (hakemus.isHakijallaPuoliso()) {
+			hakemus.setHuomioonOtettavaOmaisuus((hakemus.getHakija().getOmaisuus() - hakemus.getHakija().getVelat())
 					+ (hakemus.getPuoliso().getOmaisuus() - hakemus.getPuoliso().getVelat()));
-		}else {
+		} else {
 			hakemus.setHuomioonOtettavaOmaisuus(hakemus.getHakija().getOmaisuus() - hakemus.getHakija().getVelat());
 		}
 	}
-	
-	
+
 	public void laskeOmaisuusrajanYlittavaOsuus(ElakkeensaajanasumistukiHakemus hakemus) {
-		double tulos = hakemus.getHuomioonOtettavaOmaisuus()- hakemus.getOmaisuusRaja();
-			
-		if(tulos > 0) {
+		double tulos = hakemus.getHuomioonOtettavaOmaisuus() - hakemus.getOmaisuusRaja();
+
+		if (tulos > 0) {
 			hakemus.setOmaisuusrajanYlittavaOsuus(tulos);
-		}else {
+		} else {
 			hakemus.setOmaisuusrajanYlittavaOsuus(0);
 		}
 	}
-	
-	
+
 	public void laskeHuomioonotettavatTulot(ElakkeensaajanasumistukiHakemus hakemus) {
-		if(hakemus.isHakijallaPuoliso()) {
-			hakemus.setHuomioonOtettavatTulot(hakemus.getHakija().getTulot() 
-					+ hakemus.getPuoliso().getTulot() 
+		if (hakemus.isHakijallaPuoliso()) {
+			hakemus.setHuomioonOtettavatTulot(hakemus.getHakija().getTulot() + hakemus.getPuoliso().getTulot()
 					+ (hakemus.getVakiot().getOmaisuusKerroin() * hakemus.getOmaisuusrajanYlittavaOsuus()));
-		}else {
-			hakemus.setHuomioonOtettavatTulot(hakemus.getHakija().getTulot() 
+		} else {
+			hakemus.setHuomioonOtettavatTulot(hakemus.getHakija().getTulot()
 					+ (hakemus.getVakiot().getOmaisuusKerroin() * hakemus.getOmaisuusrajanYlittavaOsuus()));
 		}
-		
+
 	}
-	
-	
+
 	public void laskeTulorajanYlittavaOsuus(ElakkeensaajanasumistukiHakemus hakemus) {
-		double tulos =  hakemus.getHuomioonOtettavatTulot() - hakemus.getLisaomavastuunTuloraja();
-		if( tulos > 0) {
+		double tulos = hakemus.getHuomioonOtettavatTulot() - hakemus.getLisaomavastuunTuloraja();
+		if (tulos > 0) {
 			hakemus.setTulorajanYlittavaOsuus(tulos);
 		} else {
 			hakemus.setTulorajanYlittavaOsuus(0);
 		}
 	}
-	
-	
+
 	public void laskeLisaomavastuu(ElakkeensaajanasumistukiHakemus hakemus) {
-		hakemus.setLisaomavastuunMaara(hakemus.getVakiot().getLisaomavastuuKerroin() * hakemus.getTulorajanYlittavaOsuus());
+		hakemus.setLisaomavastuunMaara(
+				hakemus.getVakiot().getLisaomavastuuKerroin() * hakemus.getTulorajanYlittavaOsuus());
 	}
-	
-	
-	
+
 	/*
-	 *  HUOMIOONOTETTAVIIN ASUMISMENOIHIN LIITTYVÄT LASKUT
+	 * HUOMIOONOTETTAVIIN ASUMISMENOIHIN LIITTYVÄT LASKUT
 	 */
-	
+
 	public void laskeHuomioonotettavaNeliomaara(ElakkeensaajanasumistukiHakemus hakemus) {
-		if(hakemus.getAsunto().getPintaAla() > hakemus.getKohtuullinenAsunnonKoko()) {
+		if (hakemus.getAsunto().getPintaAla() > hakemus.getKohtuullinenAsunnonKoko()) {
 			hakemus.setHuomioonotettavaNeliomaara(hakemus.getKohtuullinenAsunnonKoko());
-		}else {
+		} else {
 			hakemus.setHuomioonotettavaNeliomaara(hakemus.getAsunto().getPintaAla());
 		}
 	}
-	
-	
+
 	public void laskeLammityskustannukset(ElakkeensaajanasumistukiHakemus hakemus) {
-		hakemus.setLammityskustannukset(hakemus.getHuomioonotettavaNeliomaara() * hakemus.getLammityskustannuksienEnimmaismaara());
+		hakemus.setLammityskustannukset(
+				hakemus.getHuomioonotettavaNeliomaara() * hakemus.getLammityskustannuksienEnimmaismaara());
 	}
-	
-	
-	
+
 	public void laskeHoitomenot(ElakkeensaajanasumistukiHakemus hakemus) {
-		hakemus.setHoitomenot(hakemus.getKunnossapidonKustannukset()
-				+ hakemus.getLammityskustannukset()
+		hakemus.setHoitomenot(hakemus.getKunnossapidonKustannukset() + hakemus.getLammityskustannukset()
 				+ hakemus.getVakiot().getOmakotitalonVesimaksunEnimmaismaara());
 	}
-	
-	
+
 	public void laskeAsumismenotYhteensa(ElakkeensaajanasumistukiHakemus hakemus) {
-		if(hakemus.getAsunto().getAsunnontyyppi().equals(Asuntotyyppi.OMAKOTITALO)) {
+		if (hakemus.getAsunto().getAsunnontyyppi().equals(Asuntotyyppi.OMAKOTITALO)) {
 			hakemus.setAsumismenotYhteensa(hakemus.getHoitomenot() + hakemus.getAsunto().getAsumismenot());
-		}else {
+		} else {
 			hakemus.setAsumismenotYhteensa(hakemus.getAsunto().getAsumismenot());
 		}
 	}
-	
+
 	public void laskeHuomioonotettavatAsumismenot(ElakkeensaajanasumistukiHakemus hakemus) {
 		double asumismenotEnimmaismaaraKuukaudessa = hakemus.getAsumismenojenEnimmaismaara() / 12;
-		if(hakemus.getAsumismenotYhteensa() > asumismenotEnimmaismaaraKuukaudessa) {
+		if (hakemus.getAsumismenotYhteensa() > asumismenotEnimmaismaaraKuukaudessa) {
 			hakemus.setHuomioonOtettavatAsumismenot(hakemus.getAsumismenojenEnimmaismaara());
-		}else {
+		} else {
 			hakemus.setHuomioonOtettavatAsumismenot(hakemus.getAsumismenotYhteensa());
 		}
 	}
-	
-	
-	
-	
+
+	public void laskeElakkaansaajanasumistuki(ElakkeensaajanasumistukiHakemus hakemus) {
+		Vakiot vakiot = hakemus.getVakiot();
+
+		double maara = vakiot.getElakkeensaajanasumistukiKerroin() * (hakemus.getHuomioonOtettavatAsumismenot()
+				- (vakiot.getPerusomavastuu() + hakemus.getLisaomavastuunMaara()));
+
+		hakemus.setElakkeensaajanasumistuenMaara(maara);
+
+	}
+
 	/*
 	 * LASKENNAN LOPPUTULOKSEN LASKEMINEN JA ASETTAMINEN RATKAISUUN
 	 */
 	
-	
-	public void laskeElakkaansaajanasumistuki(ElakkeensaajanasumistukiRatkaisu ratkaisu) {
-		ElakkeensaajanasumistukiHakemus hakemus = ratkaisu.getHakemus();
-		Vakiot vakiot = ratkaisu.getHakemus().getVakiot();
-		
-		double maara = vakiot.getElakkeensaajanasumistukiKerroin() 
-				* ( hakemus.getHuomioonOtettavatAsumismenot() 
-				- (vakiot.getPerusomavastuu() + hakemus.getLisaomavastuunMaara()));
-		
-		ratkaisu.setMyonnetynTuenMaara(maara);
-		
+	// TODO: RIKKI
+	public void laskeLopputulos(ElakkeensaajanasumistukiRatkaisu ratkaisu) {
+
+		if (ratkaisu.getHakemus().isHakijallaOikeusAsumistukeen() && (ratkaisu.getHakemus().getElakkeensaajanasumistuenMaara() >= ratkaisu.getHakemus()
+				.getPieninMaksettavaAsumistuki())) {
+			ratkaisu.setTukiMyonnetty(true);
+			ratkaisu.setMyonnetynTuenMaara(ratkaisu.getHakemus().getElakkeensaajanasumistuenMaara());
+		} else {
+			ratkaisu.setTukiMyonnetty(false);
+			ratkaisu.setMyonnetynTuenMaara(0.0);
+		}
+
 	}
-	
-	
-	
-	
-	
-	
 
 }

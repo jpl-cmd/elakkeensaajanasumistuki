@@ -1,5 +1,6 @@
 package laskentasovellus;
 
+import data.Asuntotyyppi;
 import data.ElakkeensaajanasumistukiHakemus;
 import data.ElakkeensaajanasumistukiRatkaisu;
 import data.Etuus;
@@ -11,57 +12,77 @@ public class Laskentasovellus {
 	
 	ElakkeensaajanasumistukiHakemus hakemus;
 	ElakkeensaajanasumistukiRatkaisu ratkaisu;
+	PaattelyMoottori paattelyMoottori;
+	Laskuri laskuri;
 	
 	
 	
-	// Metodi simuloi prosessia
+	// Laskentasovellus simuloi prosessia
 	public void teeRatkaisu(ElakkeensaajanasumistukiRatkaisu ratkaisu) {
 		
 		this.ratkaisu = ratkaisu;
 		this.hakemus = this.ratkaisu.getHakemus();
+		this.paattelyMoottori = new PaattelyMoottori();
+		this.laskuri = new Laskuri();
 		
 		
-		// Asetetaan hakemuksessa käytettävät vakiot
-		asetaVakiot();
+		// 1. Asetetaan hakemuksessa käytettävät vakiot
+		paattelyMoottori.paatteleVakiot(hakemus);
 		
 		
+		// 2. Tarkistetaan onko hakijalla oikeus asumistukeen
+		paattelyMoottori.paatteleOnkoHakijallaOikeusAsumistukeen(hakemus);
 		
 		
+		// Prosessin ensimmäinen haara
+		if(hakemus.isHakijallaOikeusAsumistukeen()) {
+			
+			
+			// Prosessin toinen haara
+			if(hakemus.getAsunto().getAsunnontyyppi().equals(Asuntotyyppi.OMAKOTITALO)) {
+				paattelyMoottori.paatteleKunnossapidonKustannukset(hakemus);
+				paattelyMoottori.paatteleKohtuullinenAsunnonKoko(hakemus);
+				paattelyMoottori.paatteleLammitysryhma(hakemus);
+				paattelyMoottori.paatteleLammityskustannuksienEnimmaismaara(hakemus);
+				laskuri.laskeHuomioonotettavaNeliomaara(hakemus);
+				laskuri.laskeLammityskustannukset(hakemus);
+				laskuri.laskeHoitomenot(hakemus);
+			}
+			
+			paattelyMoottori.paatteleKuntaryhma(hakemus);
+			paattelyMoottori.paatteleAsumismenojenEnimmaismaara(hakemus);
+			laskuri.laskeAsumismenotYhteensa(hakemus);
+			laskuri.laskeHuomioonotettavatAsumismenot(hakemus);
+			
+			
+			if(hakemus.isHakijallaPuoliso()) {
+				paattelyMoottori.paatteleOnkoPuolisollaOikeusAsumistukeen(hakemus);
+			}
+			
+			paattelyMoottori.paatteleLisaomavastuunTuloraja(hakemus);
+			paattelyMoottori.paatteleOmaisuusRaja(hakemus);
+			laskuri.laskeHuomioonotettavaOmaisuus(hakemus);
+			laskuri.laskeOmaisuusrajanYlittavaOsuus(hakemus);
+			laskuri.laskeHuomioonotettavatTulot(hakemus);
+			laskuri.laskeTulorajanYlittavaOsuus(hakemus);
+			laskuri.laskeLisaomavastuu(hakemus);
+			laskuri.laskeElakkaansaajanasumistuki(hakemus);
+			paattelyMoottori.paattelePieninMaksettavaAsumistuki(hakemus);
+			laskuri.laskeLopputulos(ratkaisu);
+			
+		}else {
+			laskuri.laskeLopputulos(ratkaisu);
+		}
 		
 		
 		
 		// Lasketaan tulokset
-		Laskuri laskuri = new Laskuri();
-		laskuri.laskeElakkaansaajanasumistuki(ratkaisu);
+		//laskuri.laskeElakkaansaajanasumistuki(ratkaisu);
 		
 		
 	}
 
 
-	private void asetaVakiot() {
-		Vakiot vakiot = hakemus.getVakiot();
-		
-		vakiot.setElakkeensaajanasumistukiKerroin(0.85);
-		vakiot.setPerusomavastuu(56.78);
-		vakiot.setLisaomavastuuKerroin(0.413);
-		vakiot.setOmaisuusKerroin(0.8);
-		
-		
-	}
-	
-	private void asetaLisaomavastuunTuloraja() {
-		
-	}
-	
-	private void asetaOmaisuusRaja() {
-		if(hakemus.isHakijallaPuoliso()) {
-			hakemus.setOmaisuusRaja(29290);
-		}else {
-			hakemus.setOmaisuusRaja(18306);
-		}
-	}
-		
-	
 	
 
 

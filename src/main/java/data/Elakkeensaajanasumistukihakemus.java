@@ -58,5 +58,8 @@ public class ElakkeensaajanasumistukiHakemus {
 	
 	// Hakemuksen valmistumista indikoiva muuttuja
 	private boolean hakemusValmis = false;
+	
+	// Laskennan lopputulos
+	private double elakkeensaajanasumistuenMaara;
 
 }
