@@ -18,6 +18,10 @@ public class Laskuri {
 		} else {
 			hakemus.setHuomioonOtettavaOmaisuus(hakemus.getHakija().getOmaisuus() - hakemus.getHakija().getVelat());
 		}
+		
+		if(hakemus.getHuomioonOtettavaOmaisuus() < 0) {
+			hakemus.setHuomioonOtettavaOmaisuus(0);
+		}
 	}
 
 	public void laskeOmaisuusrajanYlittavaOsuus(ElakkeensaajanasumistukiHakemus hakemus) {
@@ -42,7 +46,8 @@ public class Laskuri {
 	}
 
 	public void laskeTulorajanYlittavaOsuus(ElakkeensaajanasumistukiHakemus hakemus) {
-		double tulos = hakemus.getHuomioonOtettavatTulot() - hakemus.getLisaomavastuunTuloraja();
+		double tulos = hakemus.getHuomioonOtettavatTulot() - (hakemus.getLisaomavastuunTuloraja() / 12);
+		
 		if (tulos > 0) {
 			hakemus.setTulorajanYlittavaOsuus(tulos);
 		} else {
@@ -96,28 +101,35 @@ public class Laskuri {
 
 	public void laskeElakkaansaajanasumistuki(ElakkeensaajanasumistukiHakemus hakemus) {
 		Vakiot vakiot = hakemus.getVakiot();
-
 		double maara = vakiot.getElakkeensaajanasumistukiKerroin() * (hakemus.getHuomioonOtettavatAsumismenot()
 				- (vakiot.getPerusomavastuu() + hakemus.getLisaomavastuunMaara()));
 
 		hakemus.setElakkeensaajanasumistuenMaara(maara);
-
 	}
 
 	/*
 	 * LASKENNAN LOPPUTULOKSEN LASKEMINEN JA ASETTAMINEN RATKAISUUN
 	 */
-	
-	// TODO: RIKKI
 	public void laskeLopputulos(ElakkeensaajanasumistukiRatkaisu ratkaisu) {
-
-		if (ratkaisu.getHakemus().isHakijallaOikeusAsumistukeen() && (ratkaisu.getHakemus().getElakkeensaajanasumistuenMaara() >= ratkaisu.getHakemus()
-				.getPieninMaksettavaAsumistuki())) {
-			ratkaisu.setTukiMyonnetty(true);
-			ratkaisu.setMyonnetynTuenMaara(ratkaisu.getHakemus().getElakkeensaajanasumistuenMaara());
+		double asumistuenmaara = ratkaisu.getHakemus().getElakkeensaajanasumistuenMaara();
+		if (ratkaisu.getHakemus().isHakijallaOikeusAsumistukeen()) {
+			
+			if(ratkaisu.getHakemus().isHakijallaPuoliso() && ratkaisu.getHakemus().isPuolisollaOikeusAsumistukeen()) {
+				asumistuenmaara /= 2;
+			}
+			
+			if(asumistuenmaara >= ratkaisu.getHakemus().getPieninMaksettavaAsumistuki()) {
+				ratkaisu.setTukiMyonnetty(true);
+				ratkaisu.setMyonnetynTuenMaara(Math.floor(asumistuenmaara * 100) / 100);
+			}else {
+				ratkaisu.setTukiMyonnetty(false);
+				ratkaisu.setMyonnetynTuenMaara(0);
+			}
+			
 		} else {
 			ratkaisu.setTukiMyonnetty(false);
-			ratkaisu.setMyonnetynTuenMaara(0.0);
+			ratkaisu.setMyonnetynTuenMaara(0);
+			
 		}
 
 	}

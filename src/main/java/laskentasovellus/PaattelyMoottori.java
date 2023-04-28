@@ -40,9 +40,9 @@ public class PaattelyMoottori {
 		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 
 			if (hakemus.isHakijallaPuoliso() && hakemus.isPuolisollaOikeusAsumistukeen()) {
-				hakemus.setPieninMaksettavaAsumistuki(7.46);
-			} else {
 				hakemus.setPieninMaksettavaAsumistuki(3.73);
+			} else {
+				hakemus.setPieninMaksettavaAsumistuki(7.46);
 			}
 
 		}
@@ -73,17 +73,17 @@ public class PaattelyMoottori {
 			if (hakemus.getHakija().getIka() >= 16) {
 				
 				if (hakemus.getHakija().getEtuus().equals(Etuus.ANSIONMENETYKSEN_KORVAUS)
-						|| hakemus.getPuoliso().getEtuus().equals(Etuus.ELINKORKO)
-						|| hakemus.getPuoliso().getEtuus().equals(Etuus.HUOLTOELAKE)
-						|| hakemus.getPuoliso().getEtuus().equals(Etuus.JATKUVA_KUNTOUTUSRAHA)
-						|| hakemus.getPuoliso().getEtuus().equals(Etuus.JATKUVA_TAPATURMAELAKE)
-						|| hakemus.getPuoliso().getEtuus().equals(Etuus.JATKUVA_TYOKYVYTTOMYYSELAKE)
-						|| hakemus.getPuoliso().getEtuus().equals(Etuus.LESKENELAKE)
-						|| hakemus.getPuoliso().getEtuus().equals(Etuus.TAKUUELAKE)
-						|| hakemus.getPuoliso().getEtuus().equals(Etuus.TYOKYVYTTOMYYSELAKE)
-						|| hakemus.getPuoliso().getEtuus().equals(Etuus.TYOURAELAKE)
-						|| hakemus.getPuoliso().getEtuus().equals(Etuus.VANHUUSELAKE)
-						|| hakemus.getPuoliso().getEtuus().equals(Etuus.VASTAAVA_ULKOMAILTA_MAKSETTAVA_ETUUS)) {
+						|| hakemus.getHakija().getEtuus().equals(Etuus.ELINKORKO)
+						|| hakemus.getHakija().getEtuus().equals(Etuus.HUOLTOELAKE)
+						|| hakemus.getHakija().getEtuus().equals(Etuus.JATKUVA_KUNTOUTUSRAHA)
+						|| hakemus.getHakija().getEtuus().equals(Etuus.JATKUVA_TAPATURMAELAKE)
+						|| hakemus.getHakija().getEtuus().equals(Etuus.JATKUVA_TYOKYVYTTOMYYSELAKE)
+						|| hakemus.getHakija().getEtuus().equals(Etuus.LESKENELAKE)
+						|| hakemus.getHakija().getEtuus().equals(Etuus.TAKUUELAKE)
+						|| hakemus.getHakija().getEtuus().equals(Etuus.TYOKYVYTTOMYYSELAKE)
+						|| hakemus.getHakija().getEtuus().equals(Etuus.TYOURAELAKE)
+						|| hakemus.getHakija().getEtuus().equals(Etuus.VANHUUSELAKE)
+						|| hakemus.getHakija().getEtuus().equals(Etuus.VASTAAVA_ULKOMAILTA_MAKSETTAVA_ETUUS)) {
 
 					hakemus.setHakijallaOikeusAsumistukeen(true);
 
@@ -143,7 +143,7 @@ public class PaattelyMoottori {
 	public void paatteleLisaomavastuunTuloraja(ElakkeensaajanasumistukiHakemus hakemus) {
 
 		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
-
+			
 			if (hakemus.isHakijallaPuoliso() && hakemus.isPuolisollaOikeusAsumistukeen()) {
 				hakemus.setLisaomavastuunTuloraja(16783);
 			} else if (hakemus.isHakijallaPuoliso()) {
