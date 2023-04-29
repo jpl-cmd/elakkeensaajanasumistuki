@@ -2,6 +2,7 @@ package data;
 
 import java.time.LocalDate;
 
+import laskuri.Laskuri;
 import lombok.Data;
 
 /**
@@ -13,6 +14,7 @@ public class ElakkeensaajanasumistukiHakemus {
 	
 	// Hakemuksen jättöpäivä
 	private LocalDate hakemuspaiva = LocalDate.now();
+	private Laskuri laskuri;
 	
 	// Laskennassa käytettävät lähtötiedot tulevat hakijalta
 	private Hakija hakija;

@@ -39,7 +39,7 @@ public class Laskentasovellus {
 			
 			
 			// Prosessin toinen haara
-			if(hakemus.getAsunto().getAsunnontyyppi().equals(Asuntotyyppi.OMAKOTITALO)) {
+			if(hakemus.getAsunto().getAsuntotyyppi().equals(Asuntotyyppi.OMAKOTITALO)) {
 				paattelyMoottori.paatteleKunnossapidonKustannukset(hakemus);
 				paattelyMoottori.paatteleKohtuullinenAsunnonKoko(hakemus);
 				paattelyMoottori.paatteleLammitysryhma(hakemus);
@@ -70,8 +70,6 @@ public class Laskentasovellus {
 			paattelyMoottori.paattelePieninMaksettavaAsumistuki(hakemus);
 			laskuri.laskeLopputulos(ratkaisu);
 			
-		}else {
-			laskuri.laskeLopputulos(ratkaisu);
 		}
 		
 		

@@ -1,53 +1,812 @@
-<?xml version="1.0" encoding="UTF-8"?> 
-<definitions id="Definition"
-             targetNamespace="http://www.jboss.org/drools"
-             typeLanguage="http://www.java.com/javaTypes"
-             expressionLanguage="http://www.mvel.org/2.0"
-             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd"
-             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-             xmlns:tns="http://www.jboss.org/drools">
-
-  <process id="com.sample.bpmn.hello" tns:packageName="defaultPackage" name="Hello World" isExecutable="true" processType="Private">
-
-    <!-- nodes -->
-    <scriptTask id="_2" name="Hello" >
-      <script>System.out.println("Hello World");</script>
-    </scriptTask>
-    <startEvent id="_1" />
-    <endEvent id="_3" >
-        <terminateEventDefinition/>
-    </endEvent>
-
-    <!-- connections -->
-    <sequenceFlow id="_1-_2" sourceRef="_1" targetRef="_2" />
-    <sequenceFlow id="_2-_3" sourceRef="_2" targetRef="_3" />
-
-  </process>
-
-  <bpmndi:BPMNDiagram>
-    <bpmndi:BPMNPlane bpmnElement="com.sample.bpmn.hello" >
-      <bpmndi:BPMNShape bpmnElement="_2" >
-        <dc:Bounds x="96" y="16" width="80" height="48" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- origin at X=-50.0 Y=0.0 -->
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:java="http://www.java.com/javaTypes" xmlns:tns="http://www.jboss.org/drools" xmlns="http://www.jboss.org/drools" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd" id="Definition" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1" expressionLanguage="http://www.mvel.org/2.0" targetNamespace="http://www.jboss.org/drools" typeLanguage="http://www.java.com/javaTypes">
+  <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="data.ElakkeensaajanasumistukiHakemus"/>
+  <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="data.ElakkeensaajanasumistukiRatkaisu"/>
+  <bpmn2:itemDefinition id="ItemDefinition_194" isCollection="false" structureRef="data.Asunto"/>
+  <bpmn2:itemDefinition id="ItemDefinition_196" isCollection="false" structureRef="laskuri.Laskuri"/>
+  <bpmn2:process id="com.sample.bpmn.hello" tns:packageName="defaultPackage" name="Elakkeensaajanasumistuki" isExecutable="true" processType="Private">
+    <bpmn2:extensionElements>
+      <tns:global identifier="hakemus" type="data.ElakkeensaajanasumistukiHakemus"/>
+      <tns:import name="data.ElakkeensaajanasumistukiHakemus"/>
+      <tns:import name="data.ElakkeensaajanasumistukiRatkaisu"/>
+      <tns:global identifier="ratkaisu" type="data.ElakkeensaajanasumistukiRatkaisu"/>
+      <tns:import name="data.Asunto"/>
+      <tns:import name="laskuri.Laskuri"/>
+    </bpmn2:extensionElements>
+    <bpmn2:scriptTask id="_2" name="Aloitusviesti">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Aloitusviesti]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>_1-_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_61</bpmn2:outgoing>
+      <bpmn2:script>System.out.println(&quot;prosessi alkaa&quot;);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:startEvent id="_1">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:outgoing>_1-_2</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="_1-_2" sourceRef="_1" targetRef="_2"/>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_5" tns:ruleFlowGroup="HakijanOikeusAsumistukeen" name="Päättele hakijan oikeus asumistukeen">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Päättele hakijan oikeus asumistukeen]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_62</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_4" name="Onko hakijalla oikeus asumistukeen" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_15</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_19</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_13" tns:priority="1" sourceRef="BusinessRuleTask_5" targetRef="ExclusiveGateway_4"/>
+    <bpmn2:scriptTask id="ScriptTask_4" name="Ei oikeutta asumistukeen" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Ei oikeutta asumistukeen]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
+      <bpmn2:script>System.out.println(&quot;Ei oikeutta asumistukeen&quot;);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_15" tns:priority="1" name="Ei" sourceRef="ExclusiveGateway_4" targetRef="ScriptTask_4">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_9" language="http://www.java.com/java">return !hakemus.isHakijallaOikeusAsumistukeen();</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:endEvent id="EndEvent_5" name="End Event 5">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[End Event 5]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_17" tns:priority="1" sourceRef="ScriptTask_4" targetRef="EndEvent_5"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_5" name="Onko asunto omakotitalo" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_20</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_21</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_19" tns:priority="1" name="Kyllä" sourceRef="ExclusiveGateway_4" targetRef="ExclusiveGateway_5">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_11" language="http://www.java.com/java">return hakemus.isHakijallaOikeusAsumistukeen();</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_7" tns:ruleFlowGroup="KunnossapidonKustannukset" name="Päättele kunnossapidon kustannukset">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Päättele kunnossapidon kustannukset]]></tns:metaValue>
+        </tns:metaData>
+        <tns:onEntry-script>
+          <tns:script>System.out.println(ratkaisu.toString());</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java"/>
+        <tns:metaData name="customAsync">
+          <tns:metaValue><![CDATA[false]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_20</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_23</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_20" tns:priority="1" name="Kyllä" sourceRef="ExclusiveGateway_5" targetRef="BusinessRuleTask_7">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_12" language="http://www.java.com/java">return hakemus.getAsunto().getAsuntotyyppi().equals(&quot;OMAKOTITALO&quot;);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_8" tns:ruleFlowGroup="Kuntaryhma" name="Päättele kuntaryhmä">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Päättele kunnossapidon kustannukset]]></tns:metaValue>
+        </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java"/>
+        <tns:metaData name="customAsync">
+          <tns:metaValue><![CDATA[false]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_33</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_34</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_21" tns:priority="1" name="Ei" sourceRef="ExclusiveGateway_5" targetRef="ExclusiveGateway_6">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_13" language="http://www.java.com/java">return !hakemus.getAsunto().getAsuntotyyppi().equals(&quot;OMAKOTITALO&quot;);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_23" tns:priority="1" sourceRef="BusinessRuleTask_7" targetRef="BusinessRuleTask_9"/>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_9" tns:ruleFlowGroup="KohtuullinenAsunnonKoko" name="Päättele kohtuullinen asunnon koko">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Päättele kohtuullinen asunnon koko]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_23</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_25</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_10" tns:ruleFlowGroup="Lammitysryhma" name="Päättele lämmitysryhmä">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Päättele lämmitysryhmä]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_25</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_26</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_25" tns:priority="1" sourceRef="BusinessRuleTask_9" targetRef="BusinessRuleTask_10"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_26" tns:priority="1" sourceRef="BusinessRuleTask_10" targetRef="BusinessRuleTask_11"/>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_11" tns:ruleFlowGroup="LammityskustannuksienEnimmaismaara" name="Päättele lämmityskustannuksien enimmäismäärä">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Päättele lämmityskustannuksien enimmäismäärä]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_26</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_28</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:scriptTask id="ScriptTask_5" name="Laske huomioonotettava neliömäärä" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske huomioonotettava neliömäärä]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_28</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_30</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeHuomioonotettavaNeliomaara(hakemus);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_28" tns:priority="1" sourceRef="BusinessRuleTask_11" targetRef="ScriptTask_5"/>
+    <bpmn2:scriptTask id="ScriptTask_6" name="Laske lämmityskustannukset" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske huomioonotettava neliömäärä]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_30</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_31</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeLammityskustannukset(hakemus);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="ScriptTask_7" name="Laske hoitomenot" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske huomioonotettava neliömäärä]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_31</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_32</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeHoitomenot(hakemus);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_30" tns:priority="1" sourceRef="ScriptTask_5" targetRef="ScriptTask_6"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_31" tns:priority="1" sourceRef="ScriptTask_6" targetRef="ScriptTask_7"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_32" tns:priority="1" sourceRef="ScriptTask_7" targetRef="ExclusiveGateway_6"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_6" gatewayDirection="Converging">
+      <bpmn2:incoming>SequenceFlow_32</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_21</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_33</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_33" tns:priority="1" sourceRef="ExclusiveGateway_6" targetRef="BusinessRuleTask_8">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_14" language="http://www.java.com/java">return true;</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_12" tns:ruleFlowGroup="AsumismenojenEnimmaismaara" name="Päättele asumismenojen enimmäismäärä">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Päättele asumismenojen enimmäismäärä]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_34</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_35</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_34" tns:priority="1" sourceRef="BusinessRuleTask_8" targetRef="BusinessRuleTask_12"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_35" tns:priority="1" sourceRef="BusinessRuleTask_12" targetRef="ScriptTask_8"/>
+    <bpmn2:scriptTask id="ScriptTask_8" name="Laske asumismenot yhteensä" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske asumismenot yhteensä]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_35</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_36</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeAsumismenotYhteensa(hakemus);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="ScriptTask_9" name="Laske huomioonotettavat asumismenot" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske huomioonotettavat asumismenot]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_36</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_37</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeHuomioonotettavatAsumismenot(hakemus);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_36" tns:priority="1" sourceRef="ScriptTask_8" targetRef="ScriptTask_9"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_37" tns:priority="1" sourceRef="ScriptTask_9" targetRef="ExclusiveGateway_7"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_7" name="Onko hakijalla puoliso" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_37</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_41</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_46</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_41" tns:priority="1" name="Ei" sourceRef="ExclusiveGateway_7" targetRef="ExclusiveGateway_8">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_17" language="http://www.java.com/java">return !hakemus.isHakijallaPuoliso();</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_8" gatewayDirection="Converging">
+      <bpmn2:incoming>SequenceFlow_41</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_45</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_47</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_13" tns:ruleFlowGroup="PuolisonOikeusAsumistukeen" name="Tarkista puolison oikeus asumistukeen">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Tarkista puolison oikeus asumistukeen]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_46</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_45</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_45" tns:priority="1" sourceRef="BusinessRuleTask_13" targetRef="ExclusiveGateway_8"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_46" tns:priority="1" name="Kyllä" sourceRef="ExclusiveGateway_7" targetRef="BusinessRuleTask_13">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_16" language="http://www.java.com/java">return hakemus.isHakijallaPuoliso();</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_15" tns:ruleFlowGroup="LisaomavastuunTuloraja" name="Päättele lisäomavastuun tuloraja">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Päättele lisäomavastuun tuloraja]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_47</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_49</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_47" tns:priority="1" sourceRef="ExclusiveGateway_8" targetRef="BusinessRuleTask_15"/>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_16" tns:ruleFlowGroup="Omaisuusraja" name="Päättele omaisuusraja">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Päättele omaisuusraja]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_49</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_51</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_49" tns:priority="1" sourceRef="BusinessRuleTask_15" targetRef="BusinessRuleTask_16"/>
+    <bpmn2:scriptTask id="ScriptTask_14" name="Laske huomioonotettava omaisuus" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske huomioonotettava omaisuus]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_51</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_52</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeHuomioonotettavaOmaisuus(hakemus);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="ScriptTask_15" name="Laske omaisuusrajan ylittävä osuus" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske omaisuusrajan ylittävä osuus]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_52</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_53</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeOmaisuusrajanYlittavaOsuus(hakemus);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="ScriptTask_16" name="Laske huomioonotettavat tulot" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske huomioonotettavat tulot]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_53</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_54</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeHuomioonotettavatTulot(hakemus);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="ScriptTask_17" name="Laske tulorajan ylittävä osuus" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske tulorajan ylittävä osuus]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_54</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_55</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeTulorajanYlittavaOsuus(hakemus);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="ScriptTask_18" name="Laske lisäomavastuu" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske lisäomavastuu]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_55</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_57</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeLisaomavastuu(hakemus);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_51" tns:priority="1" sourceRef="BusinessRuleTask_16" targetRef="ScriptTask_14"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_52" tns:priority="1" sourceRef="ScriptTask_14" targetRef="ScriptTask_15"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_53" tns:priority="1" sourceRef="ScriptTask_15" targetRef="ScriptTask_16"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_54" tns:priority="1" sourceRef="ScriptTask_16" targetRef="ScriptTask_17"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_55" tns:priority="1" sourceRef="ScriptTask_17" targetRef="ScriptTask_18"/>
+    <bpmn2:scriptTask id="ScriptTask_19" name="Laske eläkkeensaajan asumistuen määrä" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske eläkkeensaajan asumistuen määrä]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_57</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_58</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeElakkaansaajanasumistuki(hakemus);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_57" tns:priority="1" sourceRef="ScriptTask_18" targetRef="ScriptTask_19"/>
+    <bpmn2:businessRuleTask id="BusinessRuleTask_17" tns:ruleFlowGroup="PieninMaksettavaAsumistuki" name="Päättele pienin maksettava asumistuki" implementation="Java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Päättele pienin maksettava asumistuki]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_58</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_59</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_58" tns:priority="1" sourceRef="ScriptTask_19" targetRef="BusinessRuleTask_17"/>
+    <bpmn2:scriptTask id="ScriptTask_20" name="Laske lopputulos" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Laske lopputulos]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_59</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_60</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getLaskuri().laskeLopputulos(ratkaisu);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_59" tns:priority="1" sourceRef="BusinessRuleTask_17" targetRef="ScriptTask_20"/>
+    <bpmn2:endEvent id="EndEvent_9" name="End Event 9">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[End Event 9]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_60</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_60" tns:priority="1" sourceRef="ScriptTask_20" targetRef="EndEvent_9"/>
+    <bpmn2:scriptTask id="ScriptTask_21" name="Aseta vakiot" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Aseta vakiot]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_61</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_62</bpmn2:outgoing>
+      <bpmn2:script>hakemus.getVakiot().setElakkeensaajanasumistukiKerroin(0.85);
+hakemus.getVakiot().setPerusomavastuu(56.78);
+hakemus.getVakiot().setLisaomavastuuKerroin(0.413);
+hakemus.getVakiot().setOmaisuusKerroin(0.08);
+hakemus.getVakiot().setOmakotitalonVesimaksunEnimmaismaara(32.40);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_61" tns:priority="1" sourceRef="_2" targetRef="ScriptTask_21"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_62" tns:priority="1" sourceRef="ScriptTask_21" targetRef="BusinessRuleTask_5"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="com.sample.bpmn.hello">
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_1" bpmnElement="_2">
+        <dc:Bounds height="48.0" width="80.0" x="80.0" y="294.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_1">
+          <dc:Bounds height="15.0" width="65.0" x="87.0" y="310.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_1" >
-        <dc:Bounds x="30" y="22" width="36" height="36" />
+      <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="_1">
+        <dc:Bounds height="36.0" width="36.0" x="0.0" y="300.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_2"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_3" >
-        <dc:Bounds x="210" y="22" width="36" height="36" />
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_5" bpmnElement="BusinessRuleTask_5" isExpanded="true">
+        <dc:Bounds height="86.0" width="146.0" x="310.0" y="275.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="135.0" x="315.0" y="303.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="_1-_2" >
-        <di:waypoint x="66" y="40" />
-        <di:waypoint x="96" y="40" />
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_4" bpmnElement="ExclusiveGateway_4" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="546.0" y="293.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="60.0" width="79.0" x="532.0" y="343.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_5" bpmnElement="ScriptTask_4" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="517.0" y="466.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="79.0" x="532.0" y="476.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_6" bpmnElement="EndEvent_5">
+        <dc:Bounds height="36.0" width="36.0" x="553.0" y="582.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="15.0" width="65.0" x="539.0" y="618.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_5" bpmnElement="ExclusiveGateway_5" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="661.0" y="191.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="73.0" x="650.0" y="241.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_7" bpmnElement="BusinessRuleTask_7" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="845.0" y="50.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="91.0" x="854.0" y="52.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_8" bpmnElement="BusinessRuleTask_8" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="846.0" y="324.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="66.0" x="868.0" y="334.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_9" bpmnElement="BusinessRuleTask_9" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1016.0" y="50.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="80.0" x="1031.0" y="52.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_10" bpmnElement="BusinessRuleTask_10" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1170.0" y="50.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="88.0" x="1181.0" y="60.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_11" bpmnElement="BusinessRuleTask_11" isExpanded="true">
+        <dc:Bounds height="70.0" width="135.0" x="1340.0" y="40.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="138.0" x="1339.0" y="52.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_6" bpmnElement="ScriptTask_5" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1550.0" y="50.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="103.0" x="1553.0" y="52.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_7" bpmnElement="ScriptTask_6" isExpanded="true">
+        <dc:Bounds height="50.0" width="141.0" x="1700.0" y="50.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="128.0" x="1706.0" y="60.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_8" bpmnElement="ScriptTask_7" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1890.0" y="50.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="15.0" width="99.0" x="1895.0" y="67.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_6" bpmnElement="ExclusiveGateway_6" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="862.0" y="191.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_12" bpmnElement="BusinessRuleTask_12" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="994.0" y="324.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="94.0" x="1002.0" y="326.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_9" bpmnElement="ScriptTask_8" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1153.0" y="324.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="80.0" x="1168.0" y="326.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_10" bpmnElement="ScriptTask_9" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1300.0" y="324.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="106.0" x="1302.0" y="326.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_7" bpmnElement="ExclusiveGateway_7" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="886.0" y="505.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="51.0" x="886.0" y="555.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_8" bpmnElement="ExclusiveGateway_8" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="1094.0" y="599.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_13" bpmnElement="BusinessRuleTask_13" isExpanded="true">
+        <dc:Bounds height="50.0" width="177.0" x="1030.0" y="505.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="141.0" x="1048.0" y="515.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_15" bpmnElement="BusinessRuleTask_15" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1254.0" y="601.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="95.0" x="1261.0" y="603.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_16" bpmnElement="BusinessRuleTask_16" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1444.0" y="599.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="79.0" x="1459.0" y="609.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_15" bpmnElement="ScriptTask_14" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1610.0" y="599.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="103.0" x="1613.0" y="601.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_16" bpmnElement="ScriptTask_15" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1775.0" y="599.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="89.0" x="1785.0" y="601.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_17" bpmnElement="ScriptTask_16" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1920.0" y="599.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="45.0" width="106.0" x="1922.0" y="601.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_18" bpmnElement="ScriptTask_17" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="2080.0" y="599.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="92.0" x="2089.0" y="609.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_19" bpmnElement="ScriptTask_18" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="2220.0" y="601.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="85.0" x="2232.0" y="611.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_20" bpmnElement="ScriptTask_19" isExpanded="true">
+        <dc:Bounds height="69.0" width="145.0" x="2370.0" y="589.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="129.0" x="2378.0" y="608.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BusinessRuleTask_17" bpmnElement="BusinessRuleTask_17" isExpanded="true">
+        <dc:Bounds height="65.0" width="162.0" x="2570.0" y="590.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="30.0" width="150.0" x="2576.0" y="607.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_21" bpmnElement="ScriptTask_20" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="2800.0" y="599.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="15.0" width="95.0" x="2807.0" y="616.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_10" bpmnElement="EndEvent_9">
+        <dc:Bounds height="36.0" width="36.0" x="2960.0" y="608.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="15.0" width="65.0" x="2946.0" y="644.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_22" bpmnElement="ScriptTask_21" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="181.0" y="293.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="15.0" width="65.0" x="203.0" y="310.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="_1-_2" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_ScriptTask_1">
+        <di:waypoint xsi:type="dc:Point" x="36.0" y="318.0"/>
+        <di:waypoint xsi:type="dc:Point" x="58.0" y="318.0"/>
+        <di:waypoint xsi:type="dc:Point" x="80.0" y="318.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_9"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_2-_3" >
-        <di:waypoint x="176" y="40" />
-        <di:waypoint x="210" y="40" />
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_15" bpmnElement="SequenceFlow_13" sourceElement="BPMNShape_BusinessRuleTask_5" targetElement="BPMNShape_ExclusiveGateway_4">
+        <di:waypoint xsi:type="dc:Point" x="456.0" y="318.0"/>
+        <di:waypoint xsi:type="dc:Point" x="501.0" y="318.0"/>
+        <di:waypoint xsi:type="dc:Point" x="546.0" y="318.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_17" bpmnElement="SequenceFlow_15" sourceElement="BPMNShape_ExclusiveGateway_4" targetElement="BPMNShape_ScriptTask_5">
+        <di:waypoint xsi:type="dc:Point" x="571.0" y="343.0"/>
+        <di:waypoint xsi:type="dc:Point" x="571.0" y="404.0"/>
+        <di:waypoint xsi:type="dc:Point" x="572.0" y="466.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="15.0" width="11.0" x="566.0" y="406.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_19" bpmnElement="SequenceFlow_17" sourceElement="BPMNShape_ScriptTask_5" targetElement="BPMNShape_EndEvent_6">
+        <di:waypoint xsi:type="dc:Point" x="572.0" y="516.0"/>
+        <di:waypoint xsi:type="dc:Point" x="572.0" y="549.0"/>
+        <di:waypoint xsi:type="dc:Point" x="571.0" y="582.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_21" bpmnElement="SequenceFlow_19" sourceElement="BPMNShape_ExclusiveGateway_4" targetElement="BPMNShape_ExclusiveGateway_5">
+        <di:waypoint xsi:type="dc:Point" x="596.0" y="318.0"/>
+        <di:waypoint xsi:type="dc:Point" x="686.0" y="318.0"/>
+        <di:waypoint xsi:type="dc:Point" x="686.0" y="241.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="15.0" width="26.0" x="668.0" y="319.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_22" bpmnElement="SequenceFlow_20" sourceElement="BPMNShape_ExclusiveGateway_5" targetElement="BPMNShape_BusinessRuleTask_7">
+        <di:waypoint xsi:type="dc:Point" x="686.0" y="191.0"/>
+        <di:waypoint xsi:type="dc:Point" x="686.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="845.0" y="75.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="15.0" width="26.0" x="696.0" y="76.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_23" bpmnElement="SequenceFlow_21" sourceElement="BPMNShape_ExclusiveGateway_5" targetElement="BPMNShape_ExclusiveGateway_6">
+        <di:waypoint xsi:type="dc:Point" x="711.0" y="216.0"/>
+        <di:waypoint xsi:type="dc:Point" x="786.0" y="216.0"/>
+        <di:waypoint xsi:type="dc:Point" x="862.0" y="216.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="15.0" width="11.0" x="782.0" y="217.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_25" bpmnElement="SequenceFlow_23" sourceElement="BPMNShape_BusinessRuleTask_7" targetElement="BPMNShape_BusinessRuleTask_9">
+        <di:waypoint xsi:type="dc:Point" x="955.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="985.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1016.0" y="75.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_27" bpmnElement="SequenceFlow_25" sourceElement="BPMNShape_BusinessRuleTask_9" targetElement="BPMNShape_BusinessRuleTask_10">
+        <di:waypoint xsi:type="dc:Point" x="1126.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1148.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1170.0" y="75.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_28" bpmnElement="SequenceFlow_26" sourceElement="BPMNShape_BusinessRuleTask_10">
+        <di:waypoint xsi:type="dc:Point" x="1280.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1295.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1311.0" y="74.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_30" bpmnElement="SequenceFlow_28" sourceElement="BPMNShape_BusinessRuleTask_11" targetElement="BPMNShape_ScriptTask_6">
+        <di:waypoint xsi:type="dc:Point" x="1475.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1512.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1550.0" y="75.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_32" bpmnElement="SequenceFlow_30" sourceElement="BPMNShape_ScriptTask_6" targetElement="BPMNShape_ScriptTask_7">
+        <di:waypoint xsi:type="dc:Point" x="1660.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1680.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1700.0" y="75.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_33" bpmnElement="SequenceFlow_31" sourceElement="BPMNShape_ScriptTask_7" targetElement="BPMNShape_ScriptTask_8">
+        <di:waypoint xsi:type="dc:Point" x="1841.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1865.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1890.0" y="75.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_34" bpmnElement="SequenceFlow_32" sourceElement="BPMNShape_ScriptTask_8" targetElement="BPMNShape_ExclusiveGateway_6">
+        <di:waypoint xsi:type="dc:Point" x="1945.0" y="100.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1945.0" y="216.0"/>
+        <di:waypoint xsi:type="dc:Point" x="912.0" y="216.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_35" bpmnElement="SequenceFlow_33" sourceElement="BPMNShape_ExclusiveGateway_6" targetElement="BPMNShape_BusinessRuleTask_8">
+        <di:waypoint xsi:type="dc:Point" x="887.0" y="241.0"/>
+        <di:waypoint xsi:type="dc:Point" x="887.0" y="282.0"/>
+        <di:waypoint xsi:type="dc:Point" x="901.0" y="282.0"/>
+        <di:waypoint xsi:type="dc:Point" x="901.0" y="324.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_36" bpmnElement="SequenceFlow_34" sourceElement="BPMNShape_BusinessRuleTask_8" targetElement="BPMNShape_BusinessRuleTask_12">
+        <di:waypoint xsi:type="dc:Point" x="956.0" y="349.0"/>
+        <di:waypoint xsi:type="dc:Point" x="975.0" y="349.0"/>
+        <di:waypoint xsi:type="dc:Point" x="994.0" y="349.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_37" bpmnElement="SequenceFlow_35" sourceElement="BPMNShape_BusinessRuleTask_12" targetElement="BPMNShape_ScriptTask_9">
+        <di:waypoint xsi:type="dc:Point" x="1104.0" y="349.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1128.0" y="349.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1153.0" y="349.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_38" bpmnElement="SequenceFlow_36" sourceElement="BPMNShape_ScriptTask_9" targetElement="BPMNShape_ScriptTask_10">
+        <di:waypoint xsi:type="dc:Point" x="1263.0" y="349.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1281.0" y="349.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1300.0" y="349.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_39" bpmnElement="SequenceFlow_37" sourceElement="BPMNShape_ScriptTask_10" targetElement="BPMNShape_ExclusiveGateway_7">
+        <di:waypoint xsi:type="dc:Point" x="1355.0" y="374.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1355.0" y="439.0"/>
+        <di:waypoint xsi:type="dc:Point" x="911.0" y="439.0"/>
+        <di:waypoint xsi:type="dc:Point" x="911.0" y="505.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_43" bpmnElement="SequenceFlow_41" sourceElement="BPMNShape_ExclusiveGateway_7" targetElement="BPMNShape_ExclusiveGateway_8">
+        <di:waypoint xsi:type="dc:Point" x="911.0" y="555.0"/>
+        <di:waypoint xsi:type="dc:Point" x="911.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1094.0" y="624.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="15.0" width="11.0" x="963.0" y="625.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_47" bpmnElement="SequenceFlow_45" sourceElement="BPMNShape_BusinessRuleTask_13" targetElement="BPMNShape_ExclusiveGateway_8">
+        <di:waypoint xsi:type="dc:Point" x="1118.0" y="555.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1118.0" y="577.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1119.0" y="599.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_48" bpmnElement="SequenceFlow_46" sourceElement="BPMNShape_ExclusiveGateway_7" targetElement="BPMNShape_BusinessRuleTask_13">
+        <di:waypoint xsi:type="dc:Point" x="936.0" y="530.0"/>
+        <di:waypoint xsi:type="dc:Point" x="983.0" y="530.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1030.0" y="530.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="15.0" width="26.0" x="971.0" y="531.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_49" bpmnElement="SequenceFlow_47" sourceElement="BPMNShape_ExclusiveGateway_8" targetElement="BPMNShape_BusinessRuleTask_15">
+        <di:waypoint xsi:type="dc:Point" x="1144.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1199.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1199.0" y="626.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1254.0" y="626.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_51" bpmnElement="SequenceFlow_49" sourceElement="BPMNShape_BusinessRuleTask_15" targetElement="BPMNShape_BusinessRuleTask_16">
+        <di:waypoint xsi:type="dc:Point" x="1364.0" y="626.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1404.0" y="626.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1404.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1444.0" y="624.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_53" bpmnElement="SequenceFlow_51" sourceElement="BPMNShape_BusinessRuleTask_16" targetElement="BPMNShape_ScriptTask_15">
+        <di:waypoint xsi:type="dc:Point" x="1554.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1582.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1610.0" y="624.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_54" bpmnElement="SequenceFlow_52" sourceElement="BPMNShape_ScriptTask_15" targetElement="BPMNShape_ScriptTask_16">
+        <di:waypoint xsi:type="dc:Point" x="1720.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1747.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1775.0" y="624.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_55" bpmnElement="SequenceFlow_53" sourceElement="BPMNShape_ScriptTask_16" targetElement="BPMNShape_ScriptTask_17">
+        <di:waypoint xsi:type="dc:Point" x="1885.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1902.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1920.0" y="624.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_56" bpmnElement="SequenceFlow_54" sourceElement="BPMNShape_ScriptTask_17" targetElement="BPMNShape_ScriptTask_18">
+        <di:waypoint xsi:type="dc:Point" x="2030.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2055.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2080.0" y="624.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_57" bpmnElement="SequenceFlow_55" sourceElement="BPMNShape_ScriptTask_18" targetElement="BPMNShape_ScriptTask_19">
+        <di:waypoint xsi:type="dc:Point" x="2190.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2205.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2205.0" y="626.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2220.0" y="626.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_59" bpmnElement="SequenceFlow_57" sourceElement="BPMNShape_ScriptTask_19" targetElement="BPMNShape_ScriptTask_20">
+        <di:waypoint xsi:type="dc:Point" x="2330.0" y="626.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2350.0" y="626.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2350.0" y="623.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2370.0" y="623.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_60" bpmnElement="SequenceFlow_58" sourceElement="BPMNShape_ScriptTask_20" targetElement="BPMNShape_BusinessRuleTask_17">
+        <di:waypoint xsi:type="dc:Point" x="2515.0" y="623.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2542.0" y="622.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2570.0" y="622.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_61" bpmnElement="SequenceFlow_59" sourceElement="BPMNShape_BusinessRuleTask_17" targetElement="BPMNShape_ScriptTask_21">
+        <di:waypoint xsi:type="dc:Point" x="2732.0" y="622.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2766.0" y="622.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2766.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2800.0" y="624.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_62" bpmnElement="SequenceFlow_60" sourceElement="BPMNShape_ScriptTask_21" targetElement="BPMNShape_EndEvent_10">
+        <di:waypoint xsi:type="dc:Point" x="2910.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2935.0" y="624.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2935.0" y="626.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2960.0" y="626.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_63" bpmnElement="SequenceFlow_61" sourceElement="BPMNShape_ScriptTask_1" targetElement="BPMNShape_ScriptTask_22">
+        <di:waypoint xsi:type="dc:Point" x="160.0" y="318.0"/>
+        <di:waypoint xsi:type="dc:Point" x="170.0" y="318.0"/>
+        <di:waypoint xsi:type="dc:Point" x="181.0" y="318.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_64" bpmnElement="SequenceFlow_62" sourceElement="BPMNShape_ScriptTask_22" targetElement="BPMNShape_BusinessRuleTask_5">
+        <di:waypoint xsi:type="dc:Point" x="291.0" y="318.0"/>
+        <di:waypoint xsi:type="dc:Point" x="301.0" y="318.0"/>
+        <di:waypoint xsi:type="dc:Point" x="310.0" y="318.0"/>
+        <bpmndi:BPMNLabel/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
-
-</definitions>
+</bpmn2:definitions>

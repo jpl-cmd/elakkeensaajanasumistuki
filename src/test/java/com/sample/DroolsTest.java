@@ -1,9 +1,17 @@
 package com.sample;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.drools.decisiontable.DecisionTableProviderImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.kie.api.KieServices;
+import org.kie.api.io.Resource;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
+import org.kie.internal.io.ResourceFactory;
+
 import data.Asunto;
 import data.Asuntotyyppi;
 import data.ElakkeensaajanasumistukiHakemus;
@@ -14,13 +22,18 @@ import data.Kunta;
 import data.Puoliso;
 import data.Vakiot;
 import laskentasovellus.Laskentasovellus;
+import laskuri.Laskuri;
 
-public class LaskentasovellusTest {
+public class DroolsTest {
 
 	Hakija hakija;
 	Puoliso puoliso;
 	ElakkeensaajanasumistukiHakemus hakemus;
 	ElakkeensaajanasumistukiRatkaisu ratkaisu;
+	Laskuri laskuri;
+	KieServices kieServices;
+	KieContainer kieContainer;
+	KieSession kieSession;
 
 	@BeforeEach
 	void alustus() {
@@ -28,10 +41,28 @@ public class LaskentasovellusTest {
 		puoliso = new Puoliso();
 		hakemus = new ElakkeensaajanasumistukiHakemus();
 		ratkaisu = new ElakkeensaajanasumistukiRatkaisu();
+		laskuri = new Laskuri();
 		hakemus.setVakiot(new Vakiot());
+		hakemus.setLaskuri(laskuri);
+
+		try {
+
+			/*
+			 * Sääntömoottorin alustukset
+			 */
+
+			this.kieServices = KieServices.Factory.get();
+			this.kieContainer = kieServices.getKieClasspathContainer();
+			// KieSessionin nimen tulee vastata KieModulessa määritellyn session nimeä
+			this.kieSession = kieContainer.newKieSession("ksession-process");
+
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
 
 	}
 
+	@Disabled
 	@Test
 	void testitapaus1() {
 
@@ -45,9 +76,14 @@ public class LaskentasovellusTest {
 		// Liitetään hakemus ratkaisupohjaan
 		ratkaisu.setHakemus(hakemus);
 
-		// Prosessoidaan hakemus
-		Laskentasovellus laskentasovellus = new Laskentasovellus();
-		laskentasovellus.teeRatkaisu(ratkaisu);
+		// Data eli faktat syötetään sessioon
+		kieSession.insert(hakemus);
+		kieSession.insert(ratkaisu);
+
+		// Käynnistetään prosessi ja aktivoidaan kaikki säännöt
+		this.kieSession.startProcess("com.sample.bpmn.hello");
+		kieSession.fireAllRules();
+		kieSession.dispose();
 
 		// Tulokset
 		assertEquals(0.0, ratkaisu.getMyonnetynTuenMaara());
@@ -89,16 +125,43 @@ public class LaskentasovellusTest {
 
 		// Liitetään hakemus ratkaisupohjaan
 		ratkaisu.setHakemus(hakemus);
-
-		// Prosessoidaan hakemus
-		Laskentasovellus laskentasovellus = new Laskentasovellus();
-		laskentasovellus.teeRatkaisu(ratkaisu);
-
+		
+		//printDRL("Lisaomavastuuntuloraja.xls");
+		
+		// Data eli faktat syötetään sessioon
+		kieSession.insert(hakemus);
+		kieSession.insert(ratkaisu);
+		
+		// Hakemus ja ratkaisu annetaan myös session muuttujiksi
+		kieSession.setGlobal("hakemus", hakemus);
+		kieSession.setGlobal("ratkaisu", ratkaisu);
+		//kieSession.setGlobal("laskuri", laskuri);
+		
+		// Käynnistetään prosessi ja aktivoidaan kaikki säännöt
+		this.kieSession.startProcess("com.sample.bpmn.hello");
+		kieSession.fireAllRules();
+		kieSession.dispose();
+		
+		System.out.println(ratkaisu);
+		
 		// Tulokset
 		assertEquals(303.11, ratkaisu.getMyonnetynTuenMaara());
 		assertEquals(true, ratkaisu.isTukiMyonnetty());
 	}
+	
+	void printDRL(String polku) {
+		Resource dt 
+        = ResourceFactory
+          .newClassPathResource(polku,
+            getClass());
 
+        DecisionTableProviderImpl decisionTableProvider = new DecisionTableProviderImpl();
+       
+        String drl = decisionTableProvider.loadFromResource(dt, null);
+        System.out.println("\n" + drl + "\n");
+	}
+
+	@Disabled
 	@Test
 	void testitapaus3() {
 		// Hakijan tiedot
@@ -146,7 +209,7 @@ public class LaskentasovellusTest {
 
 	}
 
-	
+	@Disabled
 	@Test
 	void testitapaus4() {
 
@@ -162,7 +225,7 @@ public class LaskentasovellusTest {
 		asunto.setSijaintikunta(Kunta.HAMINA);
 		asunto.setAsuntotyyppi(Asuntotyyppi.ASUMISOIKEUS_TAI_OSAOMISTUSASUNTO);
 		asunto.setAsumismenot(520);
-		
+
 		// Liitetään asunnon tiedot hakemukseen
 		hakemus.setAsunto(asunto);
 

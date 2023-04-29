@@ -83,7 +83,7 @@ public class Laskuri {
 	}
 
 	public void laskeAsumismenotYhteensa(ElakkeensaajanasumistukiHakemus hakemus) {
-		if (hakemus.getAsunto().getAsunnontyyppi().equals(Asuntotyyppi.OMAKOTITALO)) {
+		if (hakemus.getAsunto().getAsuntotyyppi().equals(Asuntotyyppi.OMAKOTITALO)) {
 			hakemus.setAsumismenotYhteensa(hakemus.getHoitomenot() + hakemus.getAsunto().getAsumismenot());
 		} else {
 			hakemus.setAsumismenotYhteensa(hakemus.getAsunto().getAsumismenot());

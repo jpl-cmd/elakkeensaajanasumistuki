@@ -6,7 +6,7 @@ import lombok.Data;
 public class Asunto {
 	
 	private Kunta sijaintikunta;
-	private Asuntotyyppi asunnontyyppi;
+	private Asuntotyyppi asuntotyyppi;
 	private double asumismenot;
 	
 	// Koskevat vain omakotitaloa
