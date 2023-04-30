@@ -10,7 +10,7 @@ import data.Kunta;
 import data.Kuntaryhma;
 import data.LammitysRyhma;
 import data.Vakiot;
-import util.PvmTarkistus;
+import util.Util;
 
 public class PaattelyMoottori {
 
@@ -37,7 +37,7 @@ public class PaattelyMoottori {
 
 	public void paattelePieninMaksettavaAsumistuki(ElakkeensaajanasumistukiHakemus hakemus) {
 
-		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
+		if (Util.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 
 			if (hakemus.isHakijallaPuoliso() && hakemus.isPuolisollaOikeusAsumistukeen()) {
 				hakemus.setPieninMaksettavaAsumistuki(3.73);
@@ -55,7 +55,7 @@ public class PaattelyMoottori {
 
 	public void paatteleOmaisuusRaja(ElakkeensaajanasumistukiHakemus hakemus) {
 
-		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
+		if (Util.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 
 			if (hakemus.isHakijallaPuoliso()) {
 				hakemus.setOmaisuusRaja(29290);
@@ -68,7 +68,7 @@ public class PaattelyMoottori {
 	}
 
 	public void paatteleOnkoHakijallaOikeusAsumistukeen(ElakkeensaajanasumistukiHakemus hakemus) {
-		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
+		if (Util.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 
 			if (hakemus.getHakija().getIka() >= 16) {
 				
@@ -103,7 +103,7 @@ public class PaattelyMoottori {
 
 	public void paatteleOnkoPuolisollaOikeusAsumistukeen(ElakkeensaajanasumistukiHakemus hakemus) {
 
-		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
+		if (Util.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 
 			if (hakemus.isHakijallaPuoliso()) {
 
@@ -142,7 +142,7 @@ public class PaattelyMoottori {
 
 	public void paatteleLisaomavastuunTuloraja(ElakkeensaajanasumistukiHakemus hakemus) {
 
-		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
+		if (Util.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 			
 			if (hakemus.isHakijallaPuoliso() && hakemus.isPuolisollaOikeusAsumistukeen()) {
 				hakemus.setLisaomavastuunTuloraja(16783);
@@ -162,7 +162,7 @@ public class PaattelyMoottori {
 
 	public void paatteleLammitysryhma(ElakkeensaajanasumistukiHakemus hakemus) {
 
-		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
+		if (Util.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 
 			if (hakemus.getAsunto().getSijaintikunta().equals(Kunta.ASKOLA)
 					|| hakemus.getAsunto().getSijaintikunta().equals(Kunta.AURA)
@@ -233,7 +233,7 @@ public class PaattelyMoottori {
 
 	public void paatteleLammityskustannuksienEnimmaismaara(ElakkeensaajanasumistukiHakemus hakemus) {
 
-		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
+		if (Util.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 
 			if (hakemus.getAsunto().isValmistunutTaiPerusparannettuEnnen1974()) {
 
@@ -262,7 +262,7 @@ public class PaattelyMoottori {
 
 	public void paatteleKohtuullinenAsunnonKoko(ElakkeensaajanasumistukiHakemus hakemus) {
 
-		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
+		if (Util.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 
 			if (hakemus.isHakijallaPuoliso()) {
 				hakemus.setKohtuullinenAsunnonKoko(85);
@@ -275,7 +275,7 @@ public class PaattelyMoottori {
 
 	public void paatteleKunnossapidonKustannukset(ElakkeensaajanasumistukiHakemus hakemus) {
 
-		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
+		if (Util.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 
 			if (hakemus.getAsunto().isValmistunutTaiPerusparannettuEnnen1974()) {
 				hakemus.setKunnossapidonKustannukset(62.19);
@@ -287,7 +287,7 @@ public class PaattelyMoottori {
 
 	public void paatteleKuntaryhma(ElakkeensaajanasumistukiHakemus hakemus) {
 
-		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
+		if (Util.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 
 			if (hakemus.getAsunto().getSijaintikunta().equals(Kunta.HELSINKI)
 					|| hakemus.getAsunto().getSijaintikunta().equals(Kunta.ESPOO)
@@ -334,7 +334,7 @@ public class PaattelyMoottori {
 
 	public void paatteleAsumismenojenEnimmaismaara(ElakkeensaajanasumistukiHakemus hakemus) {
 
-		if (PvmTarkistus.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
+		if (Util.sisaltyyAjanjaksoon(hakemus.getHakemuspaiva(), alkupvm, loppupvm)) {
 
 			if (hakemus.getKuntaryhma().equals(Kuntaryhma.KUNTARYHMA_1)) {
 				hakemus.setAsumismenojenEnimmaismaara(9287);

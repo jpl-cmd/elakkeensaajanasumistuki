@@ -93,7 +93,9 @@ public class LaskentasovellusTest {
 		// Prosessoidaan hakemus
 		Laskentasovellus laskentasovellus = new Laskentasovellus();
 		laskentasovellus.teeRatkaisu(ratkaisu);
-
+		
+		System.out.println(ratkaisu);
+		
 		// Tulokset
 		assertEquals(303.11, ratkaisu.getMyonnetynTuenMaara());
 		assertEquals(true, ratkaisu.isTukiMyonnetty());

@@ -62,16 +62,29 @@ public class DroolsTest {
 
 	}
 
-	@Disabled
+
 	@Test
 	void testitapaus1() {
 
 		// Hakijan tiedot
 		hakija.setIka(34);
 		hakija.setEtuus(Etuus.TYHJA);
+		hakija.setTulot(500);
+		hakija.setOmaisuus(500);
+		hakija.setVelat(0);
+
 		// Liitetään hakija hakemukseen
 		hakemus.setHakija(hakija);
 		hakemus.setHakijallaPuoliso(false);
+
+		// Asunnon tiedot
+		Asunto asunto = new Asunto();
+		asunto.setSijaintikunta(Kunta.HYVINKÄÄ);
+		asunto.setAsuntotyyppi(Asuntotyyppi.VUOKRA_ASUNTO);
+		asunto.setAsumismenot(600);
+
+		// Liitetään asunto hakemukseen
+		hakemus.setAsunto(asunto);
 
 		// Liitetään hakemus ratkaisupohjaan
 		ratkaisu.setHakemus(hakemus);
@@ -79,6 +92,10 @@ public class DroolsTest {
 		// Data eli faktat syötetään sessioon
 		kieSession.insert(hakemus);
 		kieSession.insert(ratkaisu);
+
+		// Hakemus ja ratkaisu annetaan myös session muuttujiksi
+		kieSession.setGlobal("hakemus", hakemus);
+		kieSession.setGlobal("ratkaisu", ratkaisu);
 
 		// Käynnistetään prosessi ja aktivoidaan kaikki säännöt
 		this.kieSession.startProcess("com.sample.bpmn.hello");
@@ -90,6 +107,7 @@ public class DroolsTest {
 		assertEquals(false, ratkaisu.isTukiMyonnetty());
 	}
 
+	
 	@Test
 	void testitapaus2() {
 
@@ -125,43 +143,28 @@ public class DroolsTest {
 
 		// Liitetään hakemus ratkaisupohjaan
 		ratkaisu.setHakemus(hakemus);
-		
-		//printDRL("Lisaomavastuuntuloraja.xls");
-		
+
+		// printDRL("AsumismenojenEnimmaismaara.xls");
+
 		// Data eli faktat syötetään sessioon
 		kieSession.insert(hakemus);
 		kieSession.insert(ratkaisu);
-		
+
 		// Hakemus ja ratkaisu annetaan myös session muuttujiksi
 		kieSession.setGlobal("hakemus", hakemus);
 		kieSession.setGlobal("ratkaisu", ratkaisu);
-		//kieSession.setGlobal("laskuri", laskuri);
-		
+		// kieSession.setGlobal("laskuri", laskuri);
+
 		// Käynnistetään prosessi ja aktivoidaan kaikki säännöt
 		this.kieSession.startProcess("com.sample.bpmn.hello");
 		kieSession.fireAllRules();
 		kieSession.dispose();
-		
-		System.out.println(ratkaisu);
-		
+
 		// Tulokset
 		assertEquals(303.11, ratkaisu.getMyonnetynTuenMaara());
 		assertEquals(true, ratkaisu.isTukiMyonnetty());
 	}
-	
-	void printDRL(String polku) {
-		Resource dt 
-        = ResourceFactory
-          .newClassPathResource(polku,
-            getClass());
 
-        DecisionTableProviderImpl decisionTableProvider = new DecisionTableProviderImpl();
-       
-        String drl = decisionTableProvider.loadFromResource(dt, null);
-        System.out.println("\n" + drl + "\n");
-	}
-
-	@Disabled
 	@Test
 	void testitapaus3() {
 		// Hakijan tiedot
@@ -199,9 +202,18 @@ public class DroolsTest {
 		// Liitetään hakemus ratkaisupohjaan
 		ratkaisu.setHakemus(hakemus);
 
-		// Prosessoidaan hakemus
-		Laskentasovellus laskentasovellus = new Laskentasovellus();
-		laskentasovellus.teeRatkaisu(ratkaisu);
+		// Data eli faktat syötetään sessioon
+		kieSession.insert(hakemus);
+		kieSession.insert(ratkaisu);
+
+		// Hakemus ja ratkaisu annetaan myös session muuttujiksi
+		kieSession.setGlobal("hakemus", hakemus);
+		kieSession.setGlobal("ratkaisu", ratkaisu);
+
+		// Käynnistetään prosessi ja aktivoidaan kaikki säännöt
+		this.kieSession.startProcess("com.sample.bpmn.hello");
+		kieSession.fireAllRules();
+		kieSession.dispose();
 
 		// Tulokset
 		assertEquals(0.0, ratkaisu.getMyonnetynTuenMaara());
@@ -209,7 +221,6 @@ public class DroolsTest {
 
 	}
 
-	@Disabled
 	@Test
 	void testitapaus4() {
 
@@ -238,14 +249,32 @@ public class DroolsTest {
 		// Liitetään hakemus ratkaisupohjaan
 		ratkaisu.setHakemus(hakemus);
 
-		// Prosessoidaan hakemus
-		Laskentasovellus laskentasovellus = new Laskentasovellus();
-		laskentasovellus.teeRatkaisu(ratkaisu);
+		// Data eli faktat syötetään sessioon
+		kieSession.insert(hakemus);
+		kieSession.insert(ratkaisu);
+
+		// Hakemus ja ratkaisu annetaan myös session muuttujiksi
+		kieSession.setGlobal("hakemus", hakemus);
+		kieSession.setGlobal("ratkaisu", ratkaisu);
+
+		// Käynnistetään prosessi ja aktivoidaan kaikki säännöt
+		this.kieSession.startProcess("com.sample.bpmn.hello");
+		kieSession.fireAllRules();
+		kieSession.dispose();
 
 		// Tulokset
 		assertEquals(393.73, ratkaisu.getMyonnetynTuenMaara());
 		assertEquals(true, ratkaisu.isTukiMyonnetty());
 
+	}
+
+	void printDRL(String polku) {
+		Resource dt = ResourceFactory.newClassPathResource(polku, getClass());
+
+		DecisionTableProviderImpl decisionTableProvider = new DecisionTableProviderImpl();
+
+		String drl = decisionTableProvider.loadFromResource(dt, null);
+		System.out.println("\n" + drl + "\n");
 	}
 
 }
