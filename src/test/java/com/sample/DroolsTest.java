@@ -98,7 +98,7 @@ public class DroolsTest {
 		kieSession.setGlobal("ratkaisu", ratkaisu);
 
 		// Käynnistetään prosessi ja aktivoidaan kaikki säännöt
-		this.kieSession.startProcess("com.sample.bpmn.hello");
+		this.kieSession.startProcess("elakkeensaajanasumistukiprosessi");
 		kieSession.fireAllRules();
 		kieSession.dispose();
 
@@ -156,7 +156,7 @@ public class DroolsTest {
 		// kieSession.setGlobal("laskuri", laskuri);
 
 		// Käynnistetään prosessi ja aktivoidaan kaikki säännöt
-		this.kieSession.startProcess("com.sample.bpmn.hello");
+		this.kieSession.startProcess("elakkeensaajanasumistukiprosessi");
 		kieSession.fireAllRules();
 		kieSession.dispose();
 
@@ -211,7 +211,7 @@ public class DroolsTest {
 		kieSession.setGlobal("ratkaisu", ratkaisu);
 
 		// Käynnistetään prosessi ja aktivoidaan kaikki säännöt
-		this.kieSession.startProcess("com.sample.bpmn.hello");
+		this.kieSession.startProcess("elakkeensaajanasumistukiprosessi");
 		kieSession.fireAllRules();
 		kieSession.dispose();
 
@@ -258,7 +258,7 @@ public class DroolsTest {
 		kieSession.setGlobal("ratkaisu", ratkaisu);
 
 		// Käynnistetään prosessi ja aktivoidaan kaikki säännöt
-		this.kieSession.startProcess("com.sample.bpmn.hello");
+		this.kieSession.startProcess("elakkeensaajanasumistukiprosessi");
 		kieSession.fireAllRules();
 		kieSession.dispose();
 

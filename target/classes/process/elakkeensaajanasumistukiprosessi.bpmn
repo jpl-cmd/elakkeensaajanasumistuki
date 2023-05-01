@@ -5,7 +5,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="data.ElakkeensaajanasumistukiRatkaisu"/>
   <bpmn2:itemDefinition id="ItemDefinition_194" isCollection="false" structureRef="data.Asunto"/>
   <bpmn2:itemDefinition id="ItemDefinition_196" isCollection="false" structureRef="laskuri.Laskuri"/>
-  <bpmn2:process id="com.sample.bpmn.hello" tns:packageName="defaultPackage" name="Elakkeensaajanasumistuki" isExecutable="true" processType="Private">
+  <bpmn2:process id="elakkeensaajanasumistukiprosessi" tns:packageName="defaultPackage" name="Elakkeensaajanasumistuki" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:global identifier="hakemus" type="data.ElakkeensaajanasumistukiHakemus"/>
       <tns:import name="data.ElakkeensaajanasumistukiHakemus"/>
@@ -61,10 +61,10 @@
     <bpmn2:sequenceFlow id="SequenceFlow_15" tns:priority="1" name="Ei" sourceRef="ExclusiveGateway_4" targetRef="ScriptTask_4">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_9" language="http://www.java.com/java">return !hakemus.isHakijallaOikeusAsumistukeen();</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:endEvent id="EndEvent_5" name="End Event 5">
+    <bpmn2:endEvent id="EndEvent_5" name="Lopetus 1">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
-          <tns:metaValue><![CDATA[End Event 5]]></tns:metaValue>
+          <tns:metaValue><![CDATA[Lopetus 1]]></tns:metaValue>
         </tns:metaData>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
@@ -347,10 +347,10 @@
       <bpmn2:script>hakemus.getLaskuri().laskeLopputulos(ratkaisu);</bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_59" tns:priority="1" sourceRef="BusinessRuleTask_17" targetRef="ScriptTask_20"/>
-    <bpmn2:endEvent id="EndEvent_9" name="End Event 9">
+    <bpmn2:endEvent id="EndEvent_9" name="Lopetus 2">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
-          <tns:metaValue><![CDATA[End Event 9]]></tns:metaValue>
+          <tns:metaValue><![CDATA[Lopetus 2]]></tns:metaValue>
         </tns:metaData>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_60</bpmn2:incoming>
@@ -374,7 +374,7 @@ hakemus.getVakiot().setOmakotitalonVesimaksunEnimmaismaara(32.40);</bpmn2:script
     <bpmn2:sequenceFlow id="SequenceFlow_62" tns:priority="1" sourceRef="ScriptTask_21" targetRef="BusinessRuleTask_5"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="com.sample.bpmn.hello">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="elakkeensaajanasumistukiprosessi">
       <bpmndi:BPMNShape id="BPMNShape_ScriptTask_1" bpmnElement="_2">
         <dc:Bounds height="48.0" width="80.0" x="80.0" y="294.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_1">
@@ -406,7 +406,7 @@ hakemus.getVakiot().setOmakotitalonVesimaksunEnimmaismaara(32.40);</bpmn2:script
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_6" bpmnElement="EndEvent_5">
         <dc:Bounds height="36.0" width="36.0" x="553.0" y="582.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_6">
-          <dc:Bounds height="15.0" width="65.0" x="539.0" y="618.0"/>
+          <dc:Bounds height="15.0" width="55.0" x="544.0" y="618.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_5" bpmnElement="ExclusiveGateway_5" isMarkerVisible="true">
@@ -564,7 +564,7 @@ hakemus.getVakiot().setOmakotitalonVesimaksunEnimmaismaara(32.40);</bpmn2:script
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_10" bpmnElement="EndEvent_9">
         <dc:Bounds height="36.0" width="36.0" x="2960.0" y="608.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_33">
-          <dc:Bounds height="15.0" width="65.0" x="2946.0" y="644.0"/>
+          <dc:Bounds height="15.0" width="55.0" x="2951.0" y="644.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ScriptTask_22" bpmnElement="ScriptTask_21" isExpanded="true">
