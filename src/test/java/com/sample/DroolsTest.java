@@ -62,7 +62,7 @@ public class DroolsTest {
 
 	}
 
-
+	
 	@Test
 	void testitapaus1() {
 
@@ -173,7 +173,7 @@ public class DroolsTest {
 		hakija.setTulot(500);
 		hakija.setOmaisuus(2000);
 		hakija.setVelat(500);
-
+	
 		// Asunnon tiedot
 		Asunto asunto = new Asunto();
 		asunto.setSijaintikunta(Kunta.HARTOLA);
@@ -181,7 +181,7 @@ public class DroolsTest {
 		asunto.setPintaAla(120);
 		asunto.setValmistunutTaiPerusparannettuEnnen1974(true);
 		asunto.setAsumismenot(8.33);
-
+		
 		// Liitetään asunnon tiedot hakemukseen
 		hakemus.setAsunto(asunto);
 
@@ -215,6 +215,8 @@ public class DroolsTest {
 		kieSession.fireAllRules();
 		kieSession.dispose();
 
+		System.out.println(ratkaisu);
+		
 		// Tulokset
 		assertEquals(0.0, ratkaisu.getMyonnetynTuenMaara());
 		assertEquals(false, ratkaisu.isTukiMyonnetty());

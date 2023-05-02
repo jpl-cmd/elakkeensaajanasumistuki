@@ -84,7 +84,7 @@
           <tns:metaValue><![CDATA[Päättele kunnossapidon kustannukset]]></tns:metaValue>
         </tns:metaData>
         <tns:onEntry-script>
-          <tns:script>System.out.println(ratkaisu.toString());</tns:script>
+          <tns:script>System.out.println(&quot;Ratkaistaan kunnossapidon kustannukset&quot;);</tns:script>
         </tns:onEntry-script>
         <tns:onExit-script scriptFormat="http://www.java.com/java"/>
       </bpmn2:extensionElements>
@@ -92,7 +92,7 @@
       <bpmn2:outgoing>SequenceFlow_23</bpmn2:outgoing>
     </bpmn2:businessRuleTask>
     <bpmn2:sequenceFlow id="SequenceFlow_20" tns:priority="1" name="Kyllä" sourceRef="ExclusiveGateway_5" targetRef="BusinessRuleTask_7">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_12" language="http://www.java.com/java">return hakemus.getAsunto().getAsuntotyyppi().equals(&quot;OMAKOTITALO&quot;);</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_12" language="http://www.java.com/java">return hakemus.getAsunto().getAsuntotyyppi().name().equals(&quot;OMAKOTITALO&quot;);</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:businessRuleTask id="BusinessRuleTask_8" tns:ruleFlowGroup="Kuntaryhma" name="Päättele kuntaryhmä">
       <bpmn2:extensionElements>
@@ -106,7 +106,7 @@
       <bpmn2:outgoing>SequenceFlow_34</bpmn2:outgoing>
     </bpmn2:businessRuleTask>
     <bpmn2:sequenceFlow id="SequenceFlow_21" tns:priority="1" name="Ei" sourceRef="ExclusiveGateway_5" targetRef="ExclusiveGateway_6">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_13" language="http://www.java.com/java">return !hakemus.getAsunto().getAsuntotyyppi().equals(&quot;OMAKOTITALO&quot;);</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_13" language="http://www.java.com/java">return !hakemus.getAsunto().getAsuntotyyppi().name().equals(&quot;OMAKOTITALO&quot;);</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_23" tns:priority="1" sourceRef="BusinessRuleTask_7" targetRef="BusinessRuleTask_9"/>
     <bpmn2:businessRuleTask id="BusinessRuleTask_9" tns:ruleFlowGroup="KohtuullinenAsunnonKoko" name="Päättele kohtuullinen asunnon koko">

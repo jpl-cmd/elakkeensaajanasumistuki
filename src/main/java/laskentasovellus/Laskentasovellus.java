@@ -3,9 +3,6 @@ package laskentasovellus;
 import data.Asuntotyyppi;
 import data.ElakkeensaajanasumistukiHakemus;
 import data.ElakkeensaajanasumistukiRatkaisu;
-import data.Etuus;
-import data.Hakija;
-import data.Vakiot;
 import laskuri.Laskuri;
 
 public class Laskentasovellus {
@@ -54,7 +51,7 @@ public class Laskentasovellus {
 			laskuri.laskeAsumismenotYhteensa(hakemus);
 			laskuri.laskeHuomioonotettavatAsumismenot(hakemus);
 			
-			
+			// Prosessin kolmas haara
 			if(hakemus.isHakijallaPuoliso()) {
 				paattelyMoottori.paatteleOnkoPuolisollaOikeusAsumistukeen(hakemus);
 			}
@@ -72,16 +69,10 @@ public class Laskentasovellus {
 			
 		}
 		
-		
-		
-		// Lasketaan tulokset
-		//laskuri.laskeElakkaansaajanasumistuki(ratkaisu);
-		
-		
 	}
-
-
-	
-
-
 }
+
+
+
+
+
